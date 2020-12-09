@@ -1,11 +1,17 @@
 const express = require("express")
 const app = express()
 const morgan = require("morgan")
+const bodyParser = require("body-parser")
 
 const rotaProdutos = require("./Routes/produtos")
 const rotaPedidos = require("./Routes/pedidos")
 
+//Morgan é um robo que vizualisa todas as rotas e cliks
 app.use(morgan("dev"))
+//confg Body-Parser
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
 app.use("/produtos", rotaProdutos)
 app.use("/pedidos", rotaPedidos)
 
