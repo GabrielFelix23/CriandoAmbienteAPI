@@ -8,9 +8,24 @@ const rotaPedidos = require("./Routes/pedidos")
 
 //Morgan é um robo que vizualisa todas as rotas e cliks
 app.use(morgan("dev"))
+
 //confg Body-Parser
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+//Confg CORS é um controle de acesso
+app.use((req, res, next) => {
+    res.header('Acess-Control-Allow-Origin', "*"),
+    res.header(
+        "Acess-Control-Allow-Header",
+        "Origin , X-Requested-With, Content-Type, Accept, Authorization",
+    )
+    if(req.method === "OPTIONS"){
+        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET")
+        return res.status(200).send({})
+    }
+    next()
+})
 
 app.use("/produtos", rotaProdutos)
 app.use("/pedidos", rotaPedidos)
